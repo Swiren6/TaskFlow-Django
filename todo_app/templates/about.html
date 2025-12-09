@@ -1,282 +1,204 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>À propos - TaskFlow</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+{% extends 'base.html' %}
+
+{% block title %}About - TaskFlow{% endblock %}
+
+{% block auth_content %}
+<style>
+    .about-container {
+        min-height: calc(100vh - 70px);
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        padding: 40px 20px;
+    }
+    
+    .about-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        padding: 50px;
+    }
+    
+    .about-content h1 {
+        color: #2c3e50;
+        font-size: 2.5rem;
+        margin-bottom: 25px;
+        border-bottom: 3px solid #4a90e2;
+        padding-bottom: 15px;
+        display: inline-block;
+    }
+    
+    .about-content h2 {
+        color: #4a90e2;
+        font-size: 1.5rem;
+        margin: 35px 0 20px;
+    }
+    
+    .about-content p {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        color: #555;
+        line-height: 1.8;
+    }
+    
+    .highlight-box {
+        background-color: #f8f9fa;
+        border-left: 5px solid #4a90e2;
+        padding: 25px;
+        margin: 30px 0;
+        border-radius: 0 10px 10px 0;
+    }
+    
+    .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        margin: 40px 0;
+    }
+    
+    .feature-card {
+        background-color: #f8f9fa;
+        padding: 25px;
+        border-radius: 12px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-top: 4px solid #4a90e2;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-card h3 {
+        color: #2c3e50;
+        margin-bottom: 12px;
+        font-size: 1.2rem;
+    }
+    
+    .feature-card p {
+        font-size: 0.95rem;
+        margin-bottom: 0;
+    }
+    
+    .tech-list {
+        padding-left: 25px;
+        margin: 20px 0;
+    }
+    
+    .tech-list li {
+        font-size: 1rem;
+        margin-bottom: 10px;
+        color: #555;
+    }
+    
+    .github-section {
+        text-align: center;
+        padding: 40px;
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+        border-radius: 12px;
+        margin-top: 40px;
+    }
+    
+    .github-section h2 {
+        color: white;
+        border-bottom: none;
+        margin-top: 0;
+    }
+    
+    .github-btn {
+        display: inline-block;
+        background-color: #24292e;
+        color: white;
+        padding: 14px 30px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+        border: 2px solid #24292e;
+    }
+    
+    .github-btn:hover {
+        background-color: transparent;
+        color: white;
+        border-color: white;
+    }
+    
+    .about-footer {
+        text-align: center;
+        padding: 30px;
+        color: #7f8c8d;
+        font-size: 0.9rem;
+        margin-top: 40px;
+        border-top: 1px solid #eaeaea;
+    }
+</style>
+
+<div class="about-container">
+    <div class="about-content">
+        <h1>À propos de TaskFlow</h1>
         
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-            padding: 20px;
-        }
+        <p><strong>TaskFlow</strong> est un système complet de gestion de tâches (To-Do) développé avec Django. Il permet à plusieurs utilisateurs de créer un compte, se connecter et gérer leurs tâches de manière personnalisée et sécurisée.</p>
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        <div class="highlight-box">
+            <p style="margin-bottom: 0;">Notre mission est de fournir une plateforme intuitive qui simplifie la gestion des tâches quotidiennes, tout en offrant des fonctionnalités avancées pour une productivité optimale.</p>
+        </div>
         
-        header {
-            text-align: center;
-            padding: 40px 20px;
-        }
+        <h2>Fonctionnalités principales</h2>
         
-        .logo {
-            font-size: 2.8rem;
-            font-weight: 800;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
-        }
-        
-        .logo span {
-            color: #3498db;
-        }
-        
-        .tagline {
-            font-size: 1.2rem;
-            color: #7f8c8d;
-            margin-bottom: 30px;
-        }
-        
-        .nav {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-        
-        .nav a {
-            text-decoration: none;
-            color: #2c3e50;
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-        }
-        
-        .nav a:hover {
-            background-color: #3498db;
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
-        }
-        
-        .content {
-            background-color: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            padding: 50px;
-            margin-bottom: 40px;
-        }
-        
-        h1 {
-            color: #2c3e50;
-            font-size: 2.5rem;
-            margin-bottom: 25px;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 15px;
-            display: inline-block;
-        }
-        
-        h2 {
-            color: #3498db;
-            font-size: 1.8rem;
-            margin: 35px 0 20px;
-        }
-        
-        p {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            color: #555;
-        }
-        
-        .highlight-box {
-            background-color: #f8f9fa;
-            border-left: 5px solid #3498db;
-            padding: 25px;
-            margin: 30px 0;
-            border-radius: 0 10px 10px 0;
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin: 40px 0;
-        }
-        
-        .feature-card {
-            background-color: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-top: 4px solid #3498db;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-card h3 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 1.4rem;
-        }
-        
-        .github-section {
-            text-align: center;
-            padding: 40px;
-            background-color: #2c3e50;
-            color: white;
-            border-radius: 15px;
-            margin-top: 40px;
-        }
-        
-        .github-btn {
-            display: inline-block;
-            background-color: #24292e;
-            color: white;
-            padding: 15px 35px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-            border: 2px solid #24292e;
-        }
-        
-        .github-btn:hover {
-            background-color: transparent;
-            color: white;
-            border-color: white;
-        }
-        
-        .github-btn i {
-            margin-right: 10px;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            margin-top: 40px;
-            border-top: 1px solid #eaeaea;
-        }
-        
-        @media (max-width: 768px) {
-            .content {
-                padding: 30px 20px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .features {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav {
-                gap: 15px;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <div class="logo">Task<span>Flow</span></div>
-            <p class="tagline">Gestion de tâches intuitive et collaborative</p>
-            <div class="nav">
-                <a href="index.html">Accueil</a>
-                <a href="about.html" style="background-color: #3498db; color: white;">À propos</a>
-                <a href="contact.html">Contact</a>
-                <a href="login.html">Connexion</a>
-                <a href="register.html">Inscription</a>
-            </div>
-        </header>
-        
-        <div class="content">
-            <h1>À propos de TaskFlow</h1>
-            
-            <p><strong>TaskFlow</strong> est un système complet de gestion de tâches (To-Do) développé avec Django. Il permet à plusieurs utilisateurs de créer un compte, se connecter et gérer leurs tâches de manière personnalisée et sécurisée.</p>
-            
-            <div class="highlight-box">
-                <p>Notre mission est de fournir une plateforme intuitive qui simplifie la gestion des tâches quotidiennes, tout en offrant des fonctionnalités avancées pour les équipes et les projets collaboratifs.</p>
+        <div class="features">
+            <div class="feature-card">
+                <h3>🔐 Authentification sécurisée</h3>
+                <p>Système d'inscription et de connexion sécurisé avec gestion de profils utilisateurs personnalisés.</p>
             </div>
             
-            <h2>Fonctionnalités principales</h2>
-            
-            <div class="features">
-                <div class="feature-card">
-                    <h3><i class="fas fa-user-shield"></i> Authentification sécurisée</h3>
-                    <p>Système d'inscription et de connexion sécurisé avec gestion de profils utilisateurs personnalisés.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><i class="fas fa-tasks"></i> Gestion de tâches avancée</h3>
-                    <p>Créez, modifiez, organisez et suivez vos tâches avec des catégories, priorités et échéances.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><i class="fas fa-users"></i> Collaboration d'équipe</h3>
-                    <p>Partagez des tâches avec d'autres utilisateurs et travaillez ensemble sur des projets communs.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><i class="fas fa-bell"></i> Notifications et rappels</h3>
-                    <p>Recevez des alertes pour les échéances approchantes et les mises à jour importantes.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><i class="fas fa-chart-line"></i> Tableaux de bord personnalisés</h3>
-                    <p>Visualisez votre productivité avec des statistiques et graphiques en temps réel.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3><i class="fas fa-mobile-alt"></i> Interface responsive</h3>
-                    <p>Accédez à vos tâches depuis n'importe quel appareil : ordinateur, tablette ou smartphone.</p>
-                </div>
+            <div class="feature-card">
+                <h3>📋 Gestion de tâches avancée</h3>
+                <p>Créez, modifiez, organisez et suivez vos tâches avec priorités et échéances.</p>
             </div>
             
-            <h2>Technologies utilisées</h2>
-            <p>TaskFlow est construit avec une stack technologique moderne et robuste :</p>
-            <ul style="padding-left: 30px; margin: 20px 0; font-size: 1.1rem;">
-                <li><strong>Backend :</strong> Django (Python) - Framework web puissant et sécurisé</li>
-                <li><strong>Base de données :</strong> SQLite/PostgreSQL pour le stockage des données</li>
-                <li><strong>Frontend :</strong> HTML5, CSS3, JavaScript avec interface responsive</li>
-                <li><strong>Authentification :</strong> Système personnalisé de Django avec sessions sécurisées</li>
-                <li><strong>Déploiement :</strong> Compatible avec Heroku, AWS, DigitalOcean, etc.</li>
-            </ul>
+            <div class="feature-card">
+                <h3>📊 Tableau de bord</h3>
+                <p>Visualisez vos statistiques et tâches importantes en un coup d'œil.</p>
+            </div>
             
-            <div class="github-section">
-                <h2 style="color: white; border-bottom: none;">Code source ouvert</h2>
-                <p>TaskFlow est un projet open-source. Vous pouvez consulter le code source, contribuer au projet ou l'utiliser comme base pour vos propres applications.</p>
-                <a href="https://github.com/Swiren6/TaskFlow-Django.git" target="_blank" class="github-btn">
-                    <i class="fab fa-github"></i> Voir sur GitHub
-                </a>
+            <div class="feature-card">
+                <h3>🔄 Historique et restauration</h3>
+                <p>Récupérez vos tâches supprimées depuis l'historique à tout moment.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>⚡ Actions en masse</h3>
+                <p>Effectuez des opérations sur plusieurs tâches simultanément.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>📱 Interface responsive</h3>
+                <p>Accédez à vos tâches depuis n'importe quel appareil.</p>
             </div>
         </div>
         
-        <footer>
-            <p>© 2025 TaskFlow - Système de gestion de tâches. Tous droits réservés.</p>
-            <p>Développé avec Django .</p>
-        </footer>
+        <h2>Technologies utilisées</h2>
+        <ul class="tech-list">
+            <li><strong>Backend :</strong> Django (Python) - Framework web puissant et sécurisé</li>
+            <li><strong>Base de données :</strong> SQLite pour le développement</li>
+            <li><strong>Frontend :</strong> HTML5, CSS3, JavaScript avec interface responsive</li>
+            <li><strong>Authentification :</strong> Système Django avec sessions sécurisées</li>
+        </ul>
+        
+        <div class="github-section">
+            <h2>Code source ouvert</h2>
+            <p>TaskFlow est un projet open-source. Vous pouvez consulter le code source et contribuer au projet.</p>
+            <a href="https://github.com/Swiren6/TaskFlow-Django.git" target="_blank" class="github-btn">
+                Voir sur GitHub
+            </a>
+        </div>
     </div>
-</body>
-</html>
+    
+    <div class="about-footer">
+        <p>© 2025 TaskFlow - Système de gestion de tâches. Tous droits réservés.</p>
+    </div>
+</div>
+{% endblock %}
