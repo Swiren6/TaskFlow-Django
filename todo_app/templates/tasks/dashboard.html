@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - TaskFlow{% endblock %}
+
+{% block content %}
+<style>
+    .welcome-message {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+    }
+    
+    .empty-state h3 {
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+    }
+    
+    .empty-state p {
+        color: var(--text-secondary);
+        margin-bottom: 24px;
+    }
+</style>
+
+<div class="page-header">
+    <h1 class="page-title">Dashboard</h1>
+    <p class="page-subtitle welcome-message">Welcome back, {{ user.first_name|default:user.username }}! Here's your task overview.</p>
+</div>
+
+<div class="page-content">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon primary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+            </div>
+            <div class="stat-value">{{ stats.total }}</div>
+            <div class="stat-label">Total Tasks</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon warning">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <div class="stat-value">{{ stats.created }}</div>
+            <div class="stat-label">Active Tasks</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon success">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <div class="stat-value">{{ stats.completed }}</div>
+            <div class="stat-label">Completed</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon danger">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+            <div class="stat-value">{{ stats.overdue }}</div>
+            <div class="stat-label">Overdue</div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Recent Tasks</h3>
+                <a href="{% url 'tasks:task_list' %}" class="btn btn-ghost btn-sm">View All</a>
+            </div>
+            
+            {% if recent_tasks %}
+            <div class="task-list">
+                {% for task in recent_tasks %}
+                <div class="task-item">
+                    {% if task.status == 'created' %}
+                    <form method="post" action="{% url 'tasks:task_complete' task.pk %}" class="task-complete-form">
+                        {% csrf_token %}
+                        <button type="submit" class="task-checkbox" title="Mark as complete"></button>
+                    </form>
+                    {% else %}
+                    <div class="task-checkbox checked">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    {% endif %}
+                    <div class="task-content">
+                        <div class="task-title">
+                            <a href="{% url 'tasks:task_edit' task.pk %}">{{ task.title }}</a>
+                            <span class="priority-tag {{ task.priority }}">{{ task.priority }}</span>
+                        </div>
+                        <div class="task-meta">
+                            {% if task.due_date %}
+                            <span class="due-tag {% if task.is_overdue %}overdue{% elif task.is_due_soon %}due-soon{% endif %}">
+                                {{ task.due_date|date:"M d" }}
+                            </span>
+                            {% endif %}
+                            <span>{{ task.status|title }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <h3>No tasks yet</h3>
+                <p>Create your first task to get started</p>
+                <a href="{% url 'tasks:task_create' %}" class="btn btn-primary">Create Task</a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Due Soon</h3>
+                <a href="{% url 'tasks:task_list' %}?due=week" class="btn btn-ghost btn-sm">View All</a>
+            </div>
+            
+            {% if due_soon %}
+            <div class="task-list">
+                {% for task in due_soon %}
+                <div class="task-item">
+                    <form method="post" action="{% url 'tasks:task_complete' task.pk %}" class="task-complete-form">
+                        {% csrf_token %}
+                        <button type="submit" class="task-checkbox" title="Mark as complete"></button>
+                    </form>
+                    <div class="task-content">
+                        <div class="task-title">
+                            <a href="{% url 'tasks:task_edit' task.pk %}">{{ task.title }}</a>
+                            <span class="priority-tag {{ task.priority }}">{{ task.priority }}</span>
+                        </div>
+                        <div class="task-meta">
+                            <span class="due-tag {% if task.is_overdue %}overdue{% elif task.is_due_soon %}due-soon{% endif %}">
+                                {{ task.due_date|date:"M d" }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <h3>All caught up!</h3>
+                <p>No tasks due in the next 3 days</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

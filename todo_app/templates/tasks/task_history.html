@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}History - TaskFlow{% endblock %}
+
+{% block content %}
+<style>
+    .history-item {
+        opacity: 0.6;
+    }
+    
+    .history-item:hover {
+        opacity: 0.8;
+    }
+    
+    .status-badge {
+        font-size: 0.7rem;
+        padding: 2px 6px;
+        border-radius: 8px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+    
+    .status-completed {
+        background: var(--success-soft);
+        color: var(--success);
+    }
+    
+    .restore-btn {
+        background: rgba(99, 102, 241, 0.15);
+        color: var(--accent-primary);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .restore-btn:hover {
+        background: var(--accent-primary);
+        color: white;
+    }
+    
+    .delete-permanent-btn {
+        background: rgba(239, 68, 68, 0.15);
+        color: var(--danger);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .delete-permanent-btn:hover {
+        background: var(--danger);
+        color: white;
+    }
+</style>
+
+<div class="page-header">
+    <h1 class="page-title">Task History</h1>
+    <p class="page-subtitle">Deleted tasks that can be restored</p>
+</div>
+
+<div class="page-content">
+    <div class="toolbar">
+        <form method="get" class="search-box">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" name="search" placeholder="Search history..." value="{{ search_query }}">
+        </form>
+    </div>
+
+    <form method="post" action="{% url 'tasks:bulk_action' %}" id="bulkForm">
+        {% csrf_token %}
+        
+        <div class="bulk-actions" id="bulkActions" style="display: none;">
+            <span id="selectedCount">0 selected</span>
+            <button type="submit" name="action" value="restore_created" class="btn btn-sm restore-btn">Restore to Active</button>
+            <button type="submit" name="action" value="restore_completed" class="btn btn-sm restore-btn">Restore to Completed</button>
+            <button type="submit" name="action" value="permanent_delete" class="btn btn-sm delete-permanent-btn" onclick="return confirm('Are you sure you want to permanently delete these tasks?')">Delete Permanently</button>
+        </div>
+
+        {% if tasks %}
+        <div class="card">
+            <div class="task-list">
+                {% for task in tasks %}
+                <div class="task-item history-item">
+                    <input type="checkbox" name="task_ids" value="{{ task.pk }}" class="select-checkbox task-select">
+                    
+                    <div class="task-content">
+                        <div class="task-title">
+                            <span>{{ task.title }}</span>
+                            <span class="priority-tag {{ task.priority }}">{{ task.priority }}</span>
+                            {% if task.previous_status == 'completed' %}
+                            <span class="status-badge status-completed">Was Completed</span>
+                            {% endif %}
+                        </div>
+                        <div class="task-meta">
+                            {% if task.deleted_at %}
+                            <span>Deleted {{ task.deleted_at|date:"M d, Y" }}</span>
+                            {% endif %}
+                            {% if task.description %}
+                            <span>{{ task.description|truncatechars:30 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="task-actions">
+                        <form method="post" action="{% url 'tasks:task_restore' task.pk %}" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="restore_to" value="created">
+                            <button type="submit" class="btn restore-btn" title="Restore to Active">Restore</button>
+                        </form>
+                        <form method="post" action="{% url 'tasks:task_permanent_delete' task.pk %}" style="display: inline;" onsubmit="return confirm('Are you sure you want to permanently delete this task?')">
+                            {% csrf_token %}
+                            <button type="submit" class="btn delete-permanent-btn" title="Delete permanently">Delete</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="card">
+            <div class="empty-state">
+                <h3>History is empty</h3>
+                <p>{% if search_query %}No deleted tasks match your search{% else %}Deleted tasks will appear here{% endif %}</p>
+            </div>
+        </div>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

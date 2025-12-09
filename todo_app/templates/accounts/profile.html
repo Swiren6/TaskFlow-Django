@@ -1,0 +1,394 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile - TaskFlow{% endblock %}
+
+{% block content %}
+<style>
+    .page-header {
+        margin-bottom: 32px;
+    }
+    
+    .page-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 8px;
+    }
+    
+    .page-subtitle {
+        color: #6c757d;
+        font-size: 15px;
+    }
+    
+    .page-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        padding: 32px;
+        border: 1px solid #e9ecef;
+        margin-bottom: 24px;
+    }
+    
+    .card-header {
+        margin-bottom: 24px;
+        border-bottom: 1px solid #e9ecef;
+        padding-bottom: 16px;
+    }
+    
+    .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    
+    .profile-header {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        margin-bottom: 32px;
+    }
+    
+    .profile-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 600;
+        color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .profile-info h2 {
+        font-size: 24px;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 4px;
+    }
+    
+    .profile-info p {
+        color: #6c757d;
+        font-size: 15px;
+    }
+    
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #495057;
+        font-size: 14px;
+    }
+    
+    /* INPUTS VISIBLES */
+    .form-input, .form-textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #dee2e6;
+        border-radius: 6px;
+        font-size: 15px;
+        transition: all 0.2s;
+        background: white;
+        color: #212529;
+        font-family: 'DM Sans', sans-serif;
+    }
+    
+    .form-textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+    
+    .form-input:focus, .form-textarea:focus {
+        outline: none;
+        border-color: #4a90e2;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        color: #212529;
+    }
+    
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+        color: #6c757d;
+        opacity: 0.7;
+    }
+    
+    .form-error {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 6px;
+    }
+    
+    .color-picker-group {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+    }
+    
+    .color-picker-group label {
+        cursor: pointer;
+        position: relative;
+    }
+    
+    .color-picker-group input[type="radio"] {
+        display: none;
+    }
+    
+    .color-swatch {
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        display: block;
+        transition: all 0.2s;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .color-picker-group input[type="radio"]:checked + .color-swatch {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 2px white, 0 0 0 4px #4a90e2;
+    }
+    
+    .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'DM Sans', sans-serif;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #357abd 0%, #2c6aa3 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+    }
+    
+    .btn-secondary {
+        background: #6c757d;
+        color: white;
+    }
+    
+    .btn-secondary:hover {
+        background: #5a6268;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(108, 117, 125, 0.2);
+    }
+    
+    hr {
+        border: none;
+        border-top: 1px solid #e9ecef;
+        margin: 24px 0;
+    }
+    
+    .stat-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px;
+        background: #f8f9fa;
+        border-radius: 6px;
+        margin-bottom: 12px;
+        transition: all 0.2s;
+    }
+    
+    .stat-item:hover {
+        background: #e9ecef;
+    }
+    
+    .stat-item span:first-child {
+        color: #6c757d;
+    }
+    
+    .stat-item span:last-child {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    
+    /* Correction autofill */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        -webkit-text-fill-color: #212529 !important;
+        -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    }
+    
+    @media (max-width: 768px) {
+        .grid-2 {
+            grid-template-columns: 1fr;
+        }
+        
+        .profile-header {
+            flex-direction: column;
+            text-align: center;
+            gap: 16px;
+        }
+    }
+</style>
+
+<div class="page-header">
+    <h1 class="page-title">Profile Settings</h1>
+    <p class="page-subtitle">Manage your account details</p>
+</div>
+
+<div class="page-content">
+    <div class="card">
+        <div class="profile-header">
+            <div class="profile-avatar" style="background-color: {{ user.profile.avatar_color|default:'#4a90e2' }}">
+                {% if user.first_name and user.last_name %}
+                    {{ user.first_name.0 }}{{ user.last_name.0 }}
+                {% else %}
+                    {{ user.username|slice:":2"|upper }}
+                {% endif %}
+            </div>
+            <div class="profile-info">
+                <h2>{{ user.get_full_name|default:user.username }}</h2>
+                <p>{{ user.email }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Personal Information</h3>
+            </div>
+            
+            <form method="post" novalidate>
+                {% csrf_token %}
+                
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="id_first_name" class="form-label">First Name</label>
+                        <input type="text" name="first_name" id="id_first_name" class="form-input" 
+                               placeholder="First name" value="{{ user_form.first_name.value|default:user.first_name }}"
+                               style="color: #212529; background: white; border: 2px solid #dee2e6;">
+                        {% if user_form.first_name.errors %}
+                        <p class="form-error">{{ user_form.first_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id_last_name" class="form-label">Last Name</label>
+                        <input type="text" name="last_name" id="id_last_name" class="form-input" 
+                               placeholder="Last name" value="{{ user_form.last_name.value|default:user.last_name }}"
+                               style="color: #212529; background: white; border: 2px solid #dee2e6;">
+                        {% if user_form.last_name.errors %}
+                        <p class="form-error">{{ user_form.last_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_username" class="form-label">Username</label>
+                    <input type="text" name="username" id="id_username" class="form-input" 
+                           placeholder="Username" value="{{ user_form.username.value|default:user.username }}"
+                           style="color: #212529; background: white; border: 2px solid #dee2e6;">
+                    {% if user_form.username.errors %}
+                    <p class="form-error">{{ user_form.username.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_email" class="form-label">Email</label>
+                    <input type="email" name="email" id="id_email" class="form-input" 
+                           placeholder="Email address" value="{{ user_form.email.value|default:user.email }}"
+                           style="color: #212529; background: white; border: 2px solid #dee2e6;">
+                    {% if user_form.email.errors %}
+                    <p class="form-error">{{ user_form.email.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_phone" class="form-label">Phone</label>
+                    <input type="text" name="phone" id="id_phone" class="form-input" 
+                           placeholder="Phone number" value="{{ profile_form.phone.value|default:'' }}"
+                           style="color: #212529; background: white; border: 2px solid #dee2e6;">
+                    {% if profile_form.phone.errors %}
+                    <p class="form-error">{{ profile_form.phone.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_bio" class="form-label">Bio</label>
+                    <textarea name="bio" id="id_bio" class="form-textarea" 
+                              placeholder="Tell us about yourself"
+                              style="color: #212529; background: white; border: 2px solid #dee2e6;">{{ profile_form.bio.value|default:'' }}</textarea>
+                    {% if profile_form.bio.errors %}
+                    <p class="form-error">{{ profile_form.bio.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Avatar Color</label>
+                    <div class="color-picker-group">
+                        {% for value, name in profile_form.avatar_color.field.choices %}
+                        <label>
+                            <input type="radio" name="avatar_color" value="{{ value }}" {% if profile_form.avatar_color.value == value %}checked{% endif %}>
+                            <span class="color-swatch" style="background-color: {{ value }}"></span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Security</h3>
+            </div>
+            
+            <p style="color: #6c757d; margin-bottom: 24px; font-size: 14px;">
+                Keep your account secure by using a strong password.
+            </p>
+            
+            <a href="{% url 'accounts:change_password' %}" class="btn btn-secondary">Change Password</a>
+            
+            <hr>
+            
+            <div class="card-header" style="margin-bottom: 24px; padding: 0; border: none;">
+                <h3 class="card-title">Account Statistics</h3>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div class="stat-item">
+                    <span>Member since</span>
+                    <span>{{ user.date_joined|date:"M d, Y" }}</span>
+                </div>
+                <div class="stat-item">
+                    <span>Total tasks</span>
+                    <span>{{ user.tasks.all.count }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - TaskFlow{% endblock %}
+
+{% block public_content %}
+<style>
+    /* Gardez TOUS les styles du design clair précédent */
+    .auth-container {
+        min-height: calc(100vh - 70px); /* Soustrayez la hauteur de la navbar */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        padding: 40px 20px;
+    }
+    
+    .auth-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        padding: 40px;
+        width: 100%;
+        max-width: 480px;
+        border: 1px solid #e9ecef;
+        margin-top: 20px;
+    }
+    
+    .auth-logo {
+        text-align: center;
+        font-size: 28px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 8px;
+        letter-spacing: -0.5px;
+    }
+    
+    .auth-subtitle {
+        text-align: center;
+        color: #6c757d;
+        margin-bottom: 32px;
+        font-size: 15px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+    
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #495057;
+        font-size: 14px;
+    }
+    
+    /* INPUTS VISIBLES */
+    .form-input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.2s;
+        background: white;
+        color: #212529;
+        font-family: 'DM Sans', sans-serif;
+    }
+    
+    .form-input:focus {
+        outline: none;
+        border-color: #4a90e2;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        color: #212529;
+    }
+    
+    .form-input::placeholder {
+        color: #6c757d;
+        opacity: 0.7;
+    }
+    
+    .form-error {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 6px;
+    }
+    
+    .message {
+        padding: 12px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        margin-bottom: 20px;
+        border: 1px solid;
+    }
+    
+    .message.error {
+        background-color: #fee;
+        border-color: #f5c6cb;
+        color: #721c24;
+    }
+    
+    .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: center;
+        font-family: 'DM Sans', sans-serif;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #357abd 0%, #2c6aa3 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+    }
+    
+    .auth-footer {
+        text-align: center;
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid #e9ecef;
+        color: #6c757d;
+        font-size: 14px;
+    }
+    
+    .auth-footer a {
+        color: #4a90e2;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    
+    .auth-footer a:hover {
+        text-decoration: underline;
+    }
+    
+    /* Correction autofill */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        -webkit-text-fill-color: #212529 !important;
+        -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    }
+    
+    @media (max-width: 576px) {
+        .auth-card {
+            padding: 30px 24px;
+        }
+        
+        .grid-2 {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+    }
+</style>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h1 class="auth-logo">TaskFlow</h1>
+        <p class="auth-subtitle">Create your account to get started</p>
+        
+        <form method="post" novalidate>
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+            <div class="message error" style="margin-bottom: 20px;">
+                {% for error in form.non_field_errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="id_first_name" class="form-label">First Name</label>
+                    <input type="text" name="first_name" id="id_first_name" class="form-input" 
+                           placeholder="Enter first name" value="{{ form.first_name.value|default:'' }}"
+                           style="color: #212529; background: white; border: 2px solid #dee2e6;">
+                    {% if form.first_name.errors %}
+                    <p class="form-error">{{ form.first_name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_last_name" class="form-label">Last Name</label>
+                    <input type="text" name="last_name" id="id_last_name" class="form-input" 
+                           placeholder="Enter last name" value="{{ form.last_name.value|default:'' }}"
+                           style="color: #212529; background: white; border: 2px solid #dee2e6;">
+                    {% if form.last_name.errors %}
+                    <p class="form-error">{{ form.last_name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_username" class="form-label">Username</label>
+                <input type="text" name="username" id="id_username" class="form-input" 
+                       placeholder="Enter username" value="{{ form.username.value|default:'' }}"
+                       style="color: #212529; background: white; border: 2px solid #dee2e6;">
+                {% if form.username.errors %}
+                <p class="form-error">{{ form.username.errors.0 }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_email" class="form-label">Email</label>
+                <input type="email" name="email" id="id_email" class="form-input" 
+                       placeholder="Enter email address" value="{{ form.email.value|default:'' }}"
+                       style="color: #212529; background: white; border: 2px solid #dee2e6;">
+                {% if form.email.errors %}
+                <p class="form-error">{{ form.email.errors.0 }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password1" class="form-label">Password</label>
+                <input type="password" name="password1" id="id_password1" class="form-input" 
+                       placeholder="Create password"
+                       style="color: #212529; background: white; border: 2px solid #dee2e6;">
+                {% if form.password1.errors %}
+                <p class="form-error">{{ form.password1.errors.0 }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password2" class="form-label">Confirm Password</label>
+                <input type="password" name="password2" id="id_password2" class="form-input" 
+                       placeholder="Confirm password"
+                       style="color: #212529; background: white; border: 2px solid #dee2e6;">
+                {% if form.password2.errors %}
+                <p class="form-error">{{ form.password2.errors.0 }}</p>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">Create Account</button>
+        </form>
+        
+        <div class="auth-footer">
+            Already have an account? <a href="{% url 'accounts:login' %}">Sign in</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block auth_content %}
+{# Vide car on utilise public_content à la place #}
+{% endblock %}
