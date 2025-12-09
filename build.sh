@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # exit on error
 set -o errexit
+cd todo_app
 
 pip install -r requirements.txt
 
