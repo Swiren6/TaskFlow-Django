@@ -3,8 +3,10 @@
 set -o errexit
 cd todo_app
 
-cd todo_app
 pip install -r requirements.txt
 
+cd todo_app
+
 python manage.py collectstatic --no-input
+
 python manage.py migrate
