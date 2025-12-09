@@ -9,35 +9,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Variables pour le design clair */
         :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-tertiary: #1a1a24;
-            --bg-card: #16161f;
-            --bg-hover: #1e1e2a;
-            --text-primary: #f5f5f7;
-            --text-secondary: #a1a1aa;
-            --text-muted: #71717a;
-            --accent-primary: #818cf8;
-            --accent-secondary: #6366f1;
-            --accent-gradient: linear-gradient(135deg, #818cf8 0%, #6366f1 50%, #4f46e5 100%);
+            --white: #ffffff;
+            --light-bg: #f8f9fa;
+            --light-bg-secondary: #e9ecef;
+            --light-border: #dee2e6;
+            --dark-text: #212529;
+            --medium-text: #495057;
+            --light-text: #6c757d;
+            --accent-blue: #4a90e2;
+            --accent-blue-dark: #357abd;
+            --danger: #dc3545;
             --success: #22c55e;
-            --success-soft: rgba(34, 197, 94, 0.15);
             --warning: #f59e0b;
-            --warning-soft: rgba(245, 158, 11, 0.15);
-            --danger: #ef4444;
-            --danger-soft: rgba(239, 68, 68, 0.15);
-            --info: #06b6d4;
-            --border-color: #27272a;
-            --border-light: #3f3f46;
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-            --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.2);
             --radius-sm: 6px;
-            --radius-md: 10px;
-            --radius-lg: 16px;
-            --radius-xl: 24px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
             --font-display: 'Space Grotesk', sans-serif;
             --font-body: 'DM Sans', sans-serif;
         }
@@ -50,21 +41,21 @@
 
         body {
             font-family: var(--font-body);
-            color: var(--text-primary);
+            color: var(--dark-text);
             min-height: 100vh;
             line-height: 1.6;
         }
 
-        /* STYLES POUR LES PAGES PUBLIQUES */
+        /* ===== PAGES PUBLIQUES ===== */
         .public-page {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0a0a0f 0%, #12121a 100%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
         }
 
-        /* NAVBAR PUBLIQUE */
+        /* NAVBAR CLAIRE */
         .public-navbar {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border-color);
+            background: white;
+            border-bottom: 1px solid var(--light-border);
             padding: 0 40px;
             height: 70px;
             display: flex;
@@ -73,6 +64,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: var(--shadow-sm);
         }
 
         .nav-container {
@@ -88,12 +80,16 @@
             font-family: var(--font-display);
             font-size: 1.5rem;
             font-weight: 700;
-            background: var(--accent-gradient);
+            color: #2c3e50;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-logo span {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-decoration: none;
-            letter-spacing: -0.5px;
         }
 
         .nav-menu {
@@ -103,32 +99,23 @@
         }
 
         .nav-link {
-            color: var(--text-secondary);
+            color: var(--medium-text);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
-            transition: color 0.2s;
-            position: relative;
-            padding: 8px 0;
+            transition: all 0.2s;
+            padding: 8px 12px;
+            border-radius: 6px;
         }
 
         .nav-link:hover {
-            color: var(--text-primary);
+            color: var(--accent-blue);
+            background: rgba(74, 144, 226, 0.05);
         }
 
         .nav-link.active {
-            color: var(--accent-primary);
-        }
-
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--accent-gradient);
-            border-radius: 2px;
+            color: var(--accent-blue);
+            font-weight: 600;
         }
 
         .nav-buttons {
@@ -138,48 +125,48 @@
         }
 
         .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 10px 20px;
-            font-family: var(--font-body);
-            font-size: 0.9rem;
-            font-weight: 500;
-            border: none;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
         }
 
         .btn-outline {
             background: transparent;
-            color: var(--accent-primary);
-            border: 1px solid var(--accent-primary);
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
         }
 
         .btn-outline:hover {
-            background: rgba(129, 140, 248, 0.1);
+            background: rgba(74, 144, 226, 0.05);
         }
 
         .btn-primary {
-            background: var(--accent-gradient);
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
             color: white;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
         }
 
         .btn-primary:hover {
             transform: translateY(-1px);
-            box-shadow: var(--shadow-glow);
+            box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
         }
 
-        /* Mobile menu toggle */
+        /* Mobile menu */
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
-            color: var(--text-primary);
+            color: var(--medium-text);
             cursor: pointer;
             padding: 8px;
         }
@@ -198,11 +185,12 @@
                 top: 70px;
                 left: 0;
                 right: 0;
-                background: var(--bg-card);
+                background: white;
                 flex-direction: column;
                 padding: 20px;
                 gap: 16px;
-                border-bottom: 1px solid var(--border-color);
+                border-bottom: 1px solid var(--light-border);
+                box-shadow: var(--shadow-md);
                 transform: translateY(-100%);
                 opacity: 0;
                 visibility: hidden;
@@ -225,26 +213,713 @@
             }
         }
 
-        /* Reste du CSS existant... */
-        /* ... gardez tout le reste du CSS existant de base.html ici ... */
+        /* ===== PAGES AUTHENTIFIÉES (avec sidebar) ===== */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            background: var(--light-bg);
+        }
 
+        .sidebar {
+            width: 260px;
+            background: white;
+            border-right: 1px solid var(--light-border);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #2c3e50;
+            padding: 0 12px;
+            margin-bottom: 32px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--light-text);
+            padding: 0 12px;
+            margin-bottom: 8px;
+        }
+
+        .nav-link-sidebar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            color: var(--medium-text);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            margin-bottom: 4px;
+        }
+
+        .nav-link-sidebar:hover {
+            background: var(--light-bg);
+            color: var(--dark-text);
+        }
+
+        .nav-link-sidebar.active {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+        }
+
+        .nav-link-sidebar svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid var(--light-border);
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            transition: background 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .user-card:hover {
+            background: var(--light-bg);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+            background: var(--accent-blue);
+        }
+
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--dark-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-email {
+            font-size: 0.75rem;
+            color: var(--light-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            padding: 32px 40px 24px;
+            border-bottom: 1px solid var(--light-border);
+            background: white;
+        }
+
+        .page-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--dark-text);
+            letter-spacing: -0.5px;
+        }
+
+        .page-subtitle {
+            color: var(--light-text);
+            font-size: 0.95rem;
+        }
+
+        .page-content {
+            padding: 32px 40px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--light-border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        /* Task list styles */
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: var(--light-bg);
+            border: 1px solid var(--light-border);
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+
+        .task-item:hover {
+            background: var(--light-bg-secondary);
+            border-color: var(--accent-blue);
+        }
+
+        .task-checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--light-border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: transparent;
+        }
+
+        .task-checkbox:hover {
+            border-color: var(--accent-blue);
+        }
+
+        .task-checkbox.checked {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .task-checkbox.checked svg {
+            color: white;
+        }
+
+        .task-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .task-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .task-title a {
+            color: var(--dark-text);
+            text-decoration: none;
+        }
+
+        .task-title a:hover {
+            color: var(--accent-blue);
+        }
+
+        .task-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--light-text);
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .task-item:hover .task-actions {
+            opacity: 1;
+        }
+
+        /* Priority tags */
+        .priority-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .priority-tag.high {
+            background: rgba(220, 53, 69, 0.1);
+            color: var(--danger);
+        }
+
+        .priority-tag.medium {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .priority-tag.low {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+        }
+
+        /* Buttons */
+        .btn-secondary {
+            background: var(--light-bg);
+            color: var(--dark-text);
+            border: 1px solid var(--light-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-bg-secondary);
+            border-color: var(--light-text);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--light-text);
+            padding: 8px;
+        }
+
+        .btn-ghost:hover {
+            background: var(--light-bg);
+            color: var(--dark-text);
+        }
+
+        .btn-danger {
+            background: rgba(220, 53, 69, 0.1);
+            color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-success {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+        }
+
+        .btn-success:hover {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+
+        .btn-icon {
+            padding: 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        /* Form styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: var(--dark-text);
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            background: white;
+            border: 2px solid var(--light-border);
+            border-radius: var(--radius-md);
+            color: var(--dark-text);
+            transition: all 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--light-text);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-select {
+            cursor: pointer;
+        }
+
+        .form-error {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 6px;
+        }
+
+        .form-help {
+            color: var(--light-text);
+            font-size: 0.85rem;
+            margin-top: 6px;
+        }
+
+        /* Messages */
+        .messages {
+            padding: 16px 40px 0;
+        }
+
+        .message {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.success {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .message.error {
+            background: rgba(220, 53, 69, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+
+        .message.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .message.info {
+            background: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+            border: 1px solid rgba(13, 110, 253, 0.3);
+        }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 16px 10px 44px;
+            background: white;
+            border: 2px solid var(--light-border);
+            border-radius: var(--radius-md);
+            color: var(--dark-text);
+            font-size: 0.9rem;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--light-text);
+        }
+
+        /* Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .page-header,
+            .page-content,
+            .messages {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+
+        /* Mobile menu button for sidebar */
+        .mobile-menu-btn-sidebar {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            z-index: 99;
+            box-shadow: var(--shadow-lg);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn-sidebar {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+        }
+
+        .sidebar-overlay.show {
+            display: block;
+        }
+
+        /* Correction autofill pour inputs - CORRIGÉ */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus {
+            -webkit-text-fill-color: var(--dark-text) !important;
+            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+        }
+
+        textarea:-webkit-autofill,
+        textarea:-webkit-autofill:hover,
+        textarea:-webkit-autofill:focus {
+            -webkit-text-fill-color: var(--dark-text) !important;
+            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+        }
+
+        select:-webkit-autofill,
+        select:-webkit-autofill:hover,
+        select:-webkit-autofill:focus {
+            -webkit-text-fill-color: var(--dark-text) !important;
+            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+        }
     </style>
 </head>
 <body>
     {% if user.is_authenticated %}
-    <!-- Version avec sidebar pour utilisateurs connectés -->
+    <!-- ===== VERSION POUR UTILISATEURS CONNECTÉS (avec sidebar) ===== -->
     <div class="app-container">
         <aside class="sidebar" id="sidebar">
-            <!-- ... reste du code sidebar existant ... -->
+            <div class="logo"><span>TaskFlow</span></div>
+            
+            <nav class="nav-section">
+                <div class="nav-label">Overview</div>
+                <a href="{% url 'tasks:dashboard' %}" class="nav-link-sidebar {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    Dashboard
+                </a>
+            </nav>
+
+            <nav class="nav-section">
+                <div class="nav-label">Tasks</div>
+                <a href="{% url 'tasks:task_list' %}" class="nav-link-sidebar {% if request.resolver_match.url_name == 'task_list' %}active{% endif %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    Active Tasks
+                </a>
+                <a href="{% url 'tasks:completed_tasks' %}" class="nav-link-sidebar {% if request.resolver_match.url_name == 'completed_tasks' %}active{% endif %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Completed
+                </a>
+                <a href="{% url 'tasks:task_history' %}" class="nav-link-sidebar {% if request.resolver_match.url_name == 'task_history' %}active{% endif %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    History
+                </a>
+            </nav>
+
+            <nav class="nav-section">
+                <div class="nav-label">Quick Actions</div>
+                <a href="{% url 'tasks:task_create' %}" class="nav-link-sidebar {% if request.resolver_match.url_name == 'task_create' %}active{% endif %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                    </svg>
+                    New Task
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="{% url 'accounts:profile' %}" class="user-card">
+                    <div class="user-avatar" style="background-color: {% if user.profile %}{{ user.profile.avatar_color }}{% else %}#4a90e2{% endif %};">
+                        {% if user.first_name and user.last_name %}
+                            {{ user.first_name.0 }}{{ user.last_name.0 }}
+                        {% else %}
+                            {{ user.username|slice:":2"|upper }}
+                        {% endif %}
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">{{ user.get_full_name|default:user.username }}</div>
+                        <div class="user-email">{{ user.email }}</div>
+                    </div>
+                </a>
+                <a href="{% url 'accounts:logout' %}" class="nav-link-sidebar" style="margin-top: 8px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Logout
+                </a>
+            </div>
         </aside>
-        <!-- ... reste du code existant ... -->
+
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+        <main class="main-content">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </main>
+
+        <button class="mobile-menu-btn-sidebar" onclick="toggleSidebar()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
     </div>
     {% else %}
-    <!-- Version publique avec navbar -->
+    <!-- ===== VERSION PUBLIQUE (avec navbar) ===== -->
     <div class="public-page">
         <nav class="public-navbar">
             <div class="nav-container">
-                <a href="/" class="nav-logo">TaskFlow</a>
+                <a href="#" class="nav-logo"><span>TaskFlow</span></a>
                 
                 <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -253,25 +928,23 @@
                 </button>
                 
                 <div class="nav-menu" id="navMenu">
-                    <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">Home</a>
-                    <a href="#about" class="nav-link">About</a>
-                    <a href="#features" class="nav-link">Features</a>
-                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="./about.html" class="nav-link">About TaskFlow</a>
+                    <a href="./contact.html" class="nav-link">Contact Us</a>
                     
                     <div class="nav-buttons">
-                        <a href="{% url 'accounts:login' %}" class="btn btn-outline">Sign In</a>
-                        <a href="{% url 'accounts:register' %}" class="btn btn-primary">Get Started</a>
+                        <a href="{% url 'accounts:login' %}" class="btn btn-outline">Login</a>
+                        <a href="{% url 'accounts:register' %}" class="btn btn-primary">Register</a>
                     </div>
                 </div>
             </div>
         </nav>
         
-        {% block public_content %}{% endblock %}
         {% block auth_content %}{% endblock %}
     </div>
     {% endif %}
 
     <script>
+        // Fonction pour le menu mobile (pages publiques)
         function toggleMobileMenu() {
             document.getElementById('navMenu').classList.toggle('open');
         }
@@ -283,7 +956,52 @@
             });
         });
         
-        // Reste du JavaScript existant...
+        // Fonction pour la sidebar (pages authentifiées)
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('show');
+        }
+        
+        // Fermer automatiquement les messages après 5 secondes
+        setTimeout(() => {
+            document.querySelectorAll('.message').forEach(msg => {
+                msg.style.opacity = '0';
+                msg.style.transform = 'translateY(-10px)';
+                setTimeout(() => msg.remove(), 300);
+            });
+        }, 5000);
+        
+        // Gestion des cases à cocher pour les actions groupées
+        function toggleSelectAll(checkbox) {
+            const checkboxes = document.querySelectorAll('.task-select');
+            checkboxes.forEach(cb => cb.checked = checkbox.checked);
+            updateBulkActions();
+        }
+        
+        function updateBulkActions() {
+            const checkboxes = document.querySelectorAll('.task-select:checked');
+            const bulkBar = document.getElementById('bulkActions');
+            const countSpan = document.getElementById('selectedCount');
+            
+            if (bulkBar) {
+                if (checkboxes.length > 0) {
+                    bulkBar.style.display = 'flex';
+                    countSpan.textContent = checkboxes.length + ' selected';
+                } else {
+                    bulkBar.style.display = 'none';
+                }
+            }
+        }
+        
+        // Initialiser les événements
+        document.addEventListener('DOMContentLoaded', function() {
+            const taskSelects = document.querySelectorAll('.task-select');
+            if (taskSelects.length > 0) {
+                taskSelects.forEach(cb => {
+                    cb.addEventListener('change', updateBulkActions);
+                });
+            }
+        });
     </script>
     {% block extra_js %}{% endblock %}
 </body>

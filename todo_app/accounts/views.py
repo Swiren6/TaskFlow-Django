@@ -8,6 +8,12 @@ from .forms import UserRegistrationForm, UserLoginForm, UserUpdateForm, ProfileU
 from tasks.models import UserProfile
 
 
+def about_view(request):
+    return render(request, 'about.html')
+
+def contact_view(request):
+    return render(request, 'contact.html')
+
 def register(request):
     if request.user.is_authenticated:
         return redirect('tasks:dashboard')

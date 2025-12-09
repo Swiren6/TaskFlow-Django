@@ -23,4 +23,5 @@ urlpatterns = [
     path('', lambda request: redirect('tasks:dashboard')),
     path('tasks/', include('tasks.urls')),
     path('accounts/', include('accounts.urls')),
+   
 ]
