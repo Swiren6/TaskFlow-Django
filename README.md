@@ -219,16 +219,17 @@ todo_app/
 ## 🎨 Captures d'Écran
 
 ### Page de Connexion
-Interface épurée avec formulaire de connexion centré.
+<img width="1400" height="735" alt="image" src="https://github.com/user-attachments/assets/aeb6659d-d7c4-4d77-afc5-3793aa074952" />
+<img width="1400" height="735" alt="image" src="https://github.com/user-attachments/assets/5eca9685-508b-4337-b408-cce513b5bb5a" />
 
 ### Tableau de Bord
-Affiche les statistiques, tâches récentes et tâches à venir.
+<img width="1400" height="735" alt="image" src="https://github.com/user-attachments/assets/07ad2eb4-5b2b-4185-9ee7-568edd76598c" />
 
 ### Liste des Tâches
-Vue complète avec filtres, recherche et actions rapides.
+<img width="1400" height="735" alt="image" src="https://github.com/user-attachments/assets/67ff0f87-c14b-40a6-9465-9aa36e6c37f4" />
 
 ### Profil Utilisateur
-Modification des informations personnelles et avatar.
+<img width="1400" height="735" alt="image" src="https://github.com/user-attachments/assets/c72596a3-a73e-47e5-9378-7e37117b8cfa" />
 
 ## 👨‍💻 Auteur
 
